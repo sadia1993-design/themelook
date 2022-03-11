@@ -10,14 +10,43 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Yajra\DataTables\Facades\DataTables;
 
 class RegisteredUserController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $all_user = User::all();
-        return view('user.index', compact('all_user'));
+
+        if ($request->ajax()) {
+            $data = User::select('*');
+            try {
+                return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn( 'status', function ($clr){
+                        if($clr->status == 'active'){
+
+                             return $clr->status;
+
+                        }else{
+                            return $clr->status;
+                        }
+                    })
+                    ->addColumn('action', function ($row) {
+
+                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Edit</a> | '.
+                            '<a href="javascript:void(0)" class="edit btn btn-danger btn-sm">Delete</a>';
+
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            } catch (\Exception $e) {
+                return $e;
+            }
+        }
+
+        return view('user.index');
     }
     /**
      * Display the registration view.
