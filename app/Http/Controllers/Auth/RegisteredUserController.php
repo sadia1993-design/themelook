@@ -16,7 +16,8 @@ class RegisteredUserController extends Controller
 
     public function index()
     {
-        return view('user.index');
+        $all_user = User::all();
+        return view('user.index', compact('all_user'));
     }
     /**
      * Display the registration view.
