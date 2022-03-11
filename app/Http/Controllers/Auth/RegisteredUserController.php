@@ -23,15 +23,6 @@ class RegisteredUserController extends Controller
             try {
                 return Datatables::of($data)
                     ->addIndexColumn()
-                    ->addColumn( 'status', function ($clr){
-                        if($clr->status == 'active'){
-
-                             return $clr->status;
-
-                        }else{
-                            return $clr->status;
-                        }
-                    })
                     ->addColumn('action', function ($row) {
 
                         $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Edit</a> | '.
