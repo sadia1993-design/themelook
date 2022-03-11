@@ -24,6 +24,9 @@ Route::get('/dashboard', function () {
 
 Route::prefix('dashboard')->controller(RegisteredUserController::class)->middleware(['auth'])->group(function () {
     Route::get('/user', 'index')->name('user');
+    Route::get('/user/destroy/{id}', 'destroy')->name('user.destroy');
+    Route::get('/user/edit/{id}', 'edit')->name('user.edit');
+    Route::put('/user/update/{id}', 'update')->name('user.update');
 });
 
 

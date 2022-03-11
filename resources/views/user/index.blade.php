@@ -12,7 +12,7 @@
                     <table class="table table-bordered data-table">
                         <thead>
                         <tr>
-                            <th>No</th>
+
                             <th>UserName</th>
                             <th>Email</th>
                             <th>Date Of Birth</th>
@@ -22,8 +22,6 @@
                             <th width="100px">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -40,15 +38,13 @@
             serverSide: true,
             ajax: "{{ route('user') }}",
             columns: [
-
-                {data: 'id', name: 'id'},
                 {data: 'username', name: 'username'},
                 {data: 'email', name: 'email'},
                 {data: 'date_of_birth', name: 'date_of_birth'},
                 {data: 'city', name: 'city'},
                 {data: 'country', name: 'country'},
                 {data: 'status' , name: 'status'},
-                {data: 'action', name: 'action', orderable: true, searchable: true},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
 

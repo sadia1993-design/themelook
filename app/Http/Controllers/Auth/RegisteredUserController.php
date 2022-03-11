@@ -23,14 +23,21 @@ class RegisteredUserController extends Controller
             try {
                 return Datatables::of($data)
                     ->addIndexColumn()
+                    ->editColumn('status', function ($row) {
+                        $status = '';
+                        if ($row->status == 'active') {
+                            $status .= "<label class='badge badge-success'> Active </label>";
+                        } else {
+                            $status .= "<label class='badge badge-secondary'> Inactive </label>";
+                        }
+                        return $status;
+                    })
                     ->addColumn('action', function ($row) {
-
-                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Edit</a> | '.
-                            '<a href="javascript:void(0)" class="edit btn btn-danger btn-sm">Delete</a>';
-
+                        $btn = '<a href="'.route('user.edit', $row->id).'" class="edit btn btn-primary btn-sm" title="Edit"><i class="fa fa-edit"></i></a> | '.
+                            '<a  href="'.route('user.destroy', $row->id).'" class="edit btn btn-danger btn-sm" title="Delete"><i class="fa fa-trash"></i></a>';
                         return $btn;
                     })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['action', 'status'])
                     ->make(true);
             } catch (\Exception $e) {
                 return $e;
@@ -80,11 +87,35 @@ class RegisteredUserController extends Controller
 
             event(new Registered($user));
 
-            Auth::login($user);
+//            Auth::login($user);
 
-            return redirect(RouteServiceProvider::HOME);
+            return redirect('login');
         }
         catch (\Exception $e){
+            return $e;
+
+        }
+    }
+
+
+    public function edit($id){
+        $user = User::find($id);
+        return view('user.show', compact('user'));
+    }
+
+    public function update($id){
+
+    }
+
+    public function destroy($id){
+        try {
+
+            $user = User::find($id);
+            if ($user->delete()) {
+                return redirect()->back();
+            }
+            return redirect()->back();
+        } catch(\Exception $e){
             return $e;
 
         }
