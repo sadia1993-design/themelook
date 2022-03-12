@@ -22,6 +22,13 @@
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+        <script>
+            $(document).ready( function () {
+                $('.datatable').DataTable({
+                    bJQueryUI: true
+                });
+            } );
+        </script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">

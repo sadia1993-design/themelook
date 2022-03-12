@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -13,7 +15,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return  view('product.index');
+        $all_products = Product::with(['variants'])
+            ->get();
+//            ->groupBy('product_id')
+//            ->toArray();
+
+//        dd($all_products);
+        return  view('product.index', compact('all_products'));
     }
 
     /**

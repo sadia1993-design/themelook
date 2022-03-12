@@ -20,6 +20,50 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+                    <table class="table table-bordered datatable">
+                        <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Gender</th>
+                            <th>Color</th>
+                            <th>Size</th>
+                            <th>Price</th>
+                            <th width="100px">Action</th>
+                        </tr>
+                        </thead>
+
+                     <tbody>
+                        @forelse($all_products as $all_product)
+
+
+
+
+                                @foreach ($all_product->variants as $all_product_variant)
+
+                                    <tr>
+                                        <td>{{$all_product->product_name}}</td>
+                                        <td>{{$all_product_variant->gender}}</td>
+                                        <td>{{$all_product_variant->color}}</td>
+                                        <td>{{$all_product_variant->size}}</td>
+                                        <td>{{$all_product_variant->price}}</td>
+                                            <td width="100px">
+                                                <a href="" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                                <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                            </td>
+
+                                    </tr>
+                                @endforeach
+
+
+
+
+
+
+                        @empty
+                        @endforelse
+
+                        </tbody>
+                    </table>
 
                 </div>
             </div>
