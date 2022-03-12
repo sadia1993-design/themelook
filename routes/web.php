@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,5 +30,7 @@ Route::prefix('dashboard')->controller(RegisteredUserController::class)->middlew
     Route::post('/user/{id}/update', 'update')->name('user.update');
 });
 
-
+Route::prefix('dashboard')->middleware(['auth'])->group(function () {
+    Route::resource('product', ProductController::class);
+});
 require __DIR__.'/auth.php';
