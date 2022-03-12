@@ -50,7 +50,15 @@
                         @forelse($product->variants as $variant)
                             <tr>
 
-                                <td>{{$variant->gender}}</td>
+                                <td>
+                                    <span>{{$variant->gender}}</span>
+                                    <input
+                                        type="text"
+                                        class="form-control gender-{{$variant->id}}"
+                                        value="{{$variant->gender}}"
+                                        style="display: none;"
+                                    />
+                                </td>
                                 <td>{{$variant->color}}</td>
                                 <td>{{$variant->size}}</td>
                                 <td>{{$variant->price}}</td>
@@ -60,8 +68,19 @@
                                         href="javascript:;"
                                         class="btn btn-sm btn-primary edit-product"
                                         data-id="{{$variant->id}}"
+                                        title="Edit"
                                     >
                                         <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    <a
+                                        href="javascript:;"
+                                        class="btn btn-sm btn-primary update-product"
+                                        data-id="{{$variant->id}}"
+                                        title="Update"
+                                        style="display: none;"
+                                    >
+                                        <i class="fas fa-save"></i>
                                     </a>
 
                                     <a
@@ -82,6 +101,8 @@
             </div>
         </div>
     </div>
+
+
 
     <script>
         $(document).ready( function (){
@@ -120,43 +141,16 @@
 
             });
 
-            //delete variance
-            {{--$(".delete-product").on('click', function() {--}}
-            {{--    if (!confirm("Do you want to delete ?")) {--}}
-            {{--        return false;--}}
-            {{--    }--}}
-            {{--    var thisAttr = $(this);--}}
-            {{--    var varianceId = thisAttr.data('id');--}}
-
-            {{--    var url = "{{route('productVariant.destroy', ':id')}}"--}}
-            {{--    url = url.replace(':id', varianceId);--}}
-            {{--    // console.log(url);--}}
-
-            {{--    $.ajax({--}}
-            {{--        url: url,--}}
-            {{--        method: 'post',--}}
-            {{--        dataType: 'json',--}}
-            {{--        headers: {--}}
-            {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-            {{--        },--}}
-            //         data: {
-            //             '_method' : 'delete'
-            //         },
-            //         success: function(response) {
-            //             console.log(response)
-            //             // if (response.success == true) {
-            //             //     thisAttr.parent().parent().remove();
-            //             // } else {
-            //             //
-            //             // }
-            //         },
-            {{--        error: function(error) {--}}
-
-            {{--        }--}}
-            {{--    })--}}
-            {{--});--}}
 
 
+            //edit
+            $('.edit-product').on('click', function (){
+                var productId = $(this).data('id');
+                var gender = $(".gender-"+productId)
+                gender.show();
+                gender.prev().hide();
+                $(this).hide().next().show().next().show();
+            })
 
         })
     </script>
