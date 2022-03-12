@@ -103,18 +103,21 @@ class ProductVariantController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $product = Product::find($id);
+            $product = ProductVariant::find($id);
             if (!$product) {
-                return response()->json(['success' => false, 'message' => 'Product not found !']);
+                return response()->json(['success' => false, 'message' => 'Variant not found !']);
             }
-            $product->product_name = $request->product_name;
+            $product->gender = $request->gender;
+            $product->size = $request->size;
+            $product->color = $request->color;
+            $product->price = $request->price;
+
             if ($product->save()) {
-                return response()->json(['success' => true, 'message' => 'Product has been updated successfully !']);
+                return response()->json(['success' => true, 'message' => 'Variant has been updated successfully !']);
             }
-            return response()->json(['success' => false, 'message' => 'Product update failed !']);
+            return response()->json(['success' => false, 'message' => 'Variant update failed !']);
 
         } catch(\exception $e) {
-//            return response()->json(['success' => false, 'message' => 'Product update failed !']);
             return $e;
         }
         return $request->all();

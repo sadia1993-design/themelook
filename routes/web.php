@@ -38,6 +38,8 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     Route::delete('product/variants/{id}/delete', [ProductVariantController::class, 'destroy'])
         ->name('productVariant.destroy');
+    Route::put('product/variants/{id}/update', [ProductVariantController::class, 'update'])
+        ->name('productVariant.update');
 
 });
 require __DIR__.'/auth.php';

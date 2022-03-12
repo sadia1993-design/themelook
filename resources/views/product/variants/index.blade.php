@@ -223,6 +223,51 @@
                 $(this).hide().prev().hide().prev().show();
             })
 
+            //update field
+            $('.update-product').on('click', function (){
+                var thisAttr = $(this);
+                var variantId = $(this).data('id');
+
+                var gender = $(".gender-"+variantId);
+                var color = $(".color-"+variantId);
+                var size = $(".size-"+variantId);
+                var price = $(".price-"+variantId);
+
+                var url = "{{route('productVariant.update', ':id')}}"
+                url = url.replace(':id', variantId);
+
+                $.ajax({
+                    url: url,
+                    method: 'post',
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'gender': gender.val(),
+                        'color': color.val(),
+                        'size': size.val(),
+                        'price': price.val(),
+                        '_method' : 'put'
+                    },
+                    success: function(response) {
+                        console.log(response.success)
+                        if (response.success == true) {
+                            thisAttr.next().hide();
+                            thisAttr.hide().prev().show();
+                            gender.hide().prev().show().html(gender.val())
+                            color.hide().prev().show().html(color.val())
+                            size.hide().prev().show().html(size.val())
+                            price.hide().prev().show().html(price.val())
+                        }
+                    },
+                    error: function(error) {
+
+                    }
+                })
+
+            })
+
         })
     </script>
 </x-app-layout>
