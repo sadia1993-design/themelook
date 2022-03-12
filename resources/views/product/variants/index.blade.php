@@ -59,9 +59,33 @@
                                         style="display: none;"
                                     />
                                 </td>
-                                <td>{{$variant->color}}</td>
-                                <td>{{$variant->size}}</td>
-                                <td>{{$variant->price}}</td>
+                                <td>
+                                    <span>{{$variant->color}}</span>
+                                    <input
+                                        type="text"
+                                        class="form-control color-{{$variant->id}}"
+                                        value="{{$variant->color}}"
+                                        style="display: none;"
+                                    />
+                                </td>
+                                <td>
+                                    <span>{{$variant->size}}</span>
+                                    <input
+                                        type="text"
+                                        class="form-control size-{{$variant->id}}"
+                                        value="{{$variant->size}}"
+                                        style="display: none;"
+                                    />
+                                </td>
+                                <td>
+                                    <span>{{$variant->price}}</span>
+                                    <input
+                                        type="text"
+                                        class="form-control price-{{$variant->id}}"
+                                        value="{{$variant->price}}"
+                                        style="display: none;"
+                                    />
+                                </td>
 
                                 <td width="100px">
                                     <a
@@ -81,6 +105,16 @@
                                         style="display: none;"
                                     >
                                         <i class="fas fa-save"></i>
+                                    </a>
+
+                                    <a
+                                        href="javascript:;"
+                                        class="btn btn-sm btn-info reset-product-edit"
+                                        data-id="{{$variant->id}}"
+                                        title="Reset"
+                                        style="display: none;"
+                                    >
+                                        <i class="fas fa-refresh"></i>
                                     </a>
 
                                     <a
@@ -143,12 +177,26 @@
 
 
 
-            //edit
+            //edit button appear
             $('.edit-product').on('click', function (){
                 var productId = $(this).data('id');
-                var gender = $(".gender-"+productId)
+
+                var gender = $(".gender-"+productId);
+                var color = $(".color-"+productId);
+                var size = $(".size-"+productId);
+                var price = $(".price-"+productId);
+                // console.log(size)
+
                 gender.show();
+                color.show();
+                size.show();
+                price.show();
+
                 gender.prev().hide();
+                color.prev().hide();
+                size.prev().hide();
+                price.prev().hide();
+
                 $(this).hide().next().show().next().show();
             })
 
