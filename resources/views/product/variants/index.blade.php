@@ -200,6 +200,29 @@
                 $(this).hide().next().show().next().show();
             })
 
+
+            //reset button
+            $('.reset-product-edit').on('click', function (){
+                var variantId = $(this).data('id');
+
+                var gender = $(".gender-"+variantId);
+                var color = $(".color-"+variantId);
+                var size = $(".size-"+variantId);
+                var price = $(".price-"+variantId);
+
+                gender.hide();
+                color.hide();
+                size.hide();
+                price.hide();
+
+                gender.prev().show();
+                color.prev().show();
+                size.prev().show();
+                price.prev().show();
+
+                $(this).hide().prev().hide().prev().show();
+            })
+
         })
     </script>
 </x-app-layout>
