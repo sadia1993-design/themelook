@@ -66,6 +66,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'username' => ['required','string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -76,16 +77,24 @@ class RegisteredUserController extends Controller
         ]);
 
         try{
-            $user = User::create([
-                'username' => $request->username,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'date_of_birth' => $request->dob,
-                'city' => $request->city,
-                'country' => $request->country,
-            ]);
 
-            event(new Registered($user));
+            if ($request->status == 'active') {
+                $status = "active";
+            } else {
+                $status = "inactive";
+            }
+
+            $data = new User();
+            $data->username = $request->username;
+            $data->email = $request->email;
+            $data->password = Hash::make($request->password);
+            $data->date_of_birth = $request->dob;
+            $data->city = $request->city;
+            $data->status = $status;
+            $data->country = $request->country;
+            $data->save();
+
+            event(new Registered($data));
 
 //            Auth::login($user);
 
