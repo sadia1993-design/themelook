@@ -17,10 +17,6 @@ class ProductController extends Controller
     {
         $all_products = Product::with(['variants'])
             ->get();
-//            ->groupBy('product_id')
-//            ->toArray();
-
-//        dd($all_products);
         return  view('product.index', compact('all_products'));
     }
 
@@ -31,7 +27,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::get();
+        return  view('product.create', compact('products'));
     }
 
     /**
@@ -42,7 +39,27 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'product_id' => ['required'],
+            'size' => ['required'],
+            'price' => ['required', 'integer'],
+        ]);
+
+        try{
+            $data = new ProductVariant();
+            $data->product_id = $request->product_id;
+            $data->gender = $request->gender;
+            $data->size = $request->size;
+            $data->color = $request->color;
+            $data->price = $request->price;
+            $data->save();
+
+            return redirect()->route('product.index')->with('success', 'Product variant Added successfully');
+
+        }catch (\Exception $e){
+            return $e;
+        }
     }
 
     /**
@@ -64,7 +81,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $products = Product::get();
+        $variant = ProductVariant::find($id);
+        $variances = ProductVariant::get();
+//        dd($variance);
+        return view('product.show', compact('variant', 'products', 'variances'));
     }
 
     /**
@@ -87,6 +108,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            ProductVariant::destroy($id);
+            return redirect()->route('product.index')->with('success', 'product  deleted Successfully');
+        } catch (\exception $e) {
+            return $e->getMessage();
+        }
     }
 }
