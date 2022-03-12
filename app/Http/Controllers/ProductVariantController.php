@@ -131,7 +131,8 @@ class ProductVariantController extends Controller
     {
 
         try {
-            ProductVariant::destroy($id);
+            $productVariant = ProductVariant::find($id);
+            $productVariant->delete();
             return response()->json(['success' => true, 'message' => 'Variance has been deleted successfully !']);
         }
         catch (\exception $e) {

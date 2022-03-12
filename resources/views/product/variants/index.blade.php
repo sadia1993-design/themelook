@@ -67,8 +67,8 @@
                                     <a
                                         href="javascript:;"
                                         class="btn btn-sm btn-danger delete-product"
-                                        data-id="{{$variant->id}}"
                                         title="Delete"
+                                        data-id="{{$variant->id}}"
                                     >
                                         <i class="fas fa-trash"></i>
                                     </a>
@@ -86,17 +86,17 @@
     <script>
         $(document).ready( function (){
 
-            //delete variance
-            $(".delete-product").on('click', function() {
-                if (!confirm("Do you want to delete ?")) {
-                    return false;
+            $(".delete-product").on('click', function (){
+                if( !confirm('Do You Want to delete this record?')){
+                   return false;
                 }
+
                 var thisAttr = $(this);
                 var varianceId = thisAttr.data('id');
 
-                var url = "{{route('product.destroy', ':id')}}"
-                url = url.replace(':id', varianceId);
-                // console.log(url);
+                var url = "{{route('productVariant.destroy', ':id')}}";
+                var url = url.replace(':id', varianceId);
+                console.log(url);
 
                 $.ajax({
                     url: url,
@@ -109,18 +109,55 @@
                         '_method' : 'delete'
                     },
                     success: function(response) {
-                        console.log(response)
-                        // if (response.success == true) {
-                        //     thisAttr.parent().parent().remove();
-                        // } else {
-                        //
-                        // }
-                    },
-                    error: function(error) {
+                        console.log(response.success)
+                        if (response.success == true) {
+                            thisAttr.parent().parent().remove();
+                        } else {
 
-                    }
+                        }
+                    },
                 })
+
             });
+
+            //delete variance
+            {{--$(".delete-product").on('click', function() {--}}
+            {{--    if (!confirm("Do you want to delete ?")) {--}}
+            {{--        return false;--}}
+            {{--    }--}}
+            {{--    var thisAttr = $(this);--}}
+            {{--    var varianceId = thisAttr.data('id');--}}
+
+            {{--    var url = "{{route('productVariant.destroy', ':id')}}"--}}
+            {{--    url = url.replace(':id', varianceId);--}}
+            {{--    // console.log(url);--}}
+
+            {{--    $.ajax({--}}
+            {{--        url: url,--}}
+            {{--        method: 'post',--}}
+            {{--        dataType: 'json',--}}
+            {{--        headers: {--}}
+            {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+            {{--        },--}}
+            //         data: {
+            //             '_method' : 'delete'
+            //         },
+            //         success: function(response) {
+            //             console.log(response)
+            //             // if (response.success == true) {
+            //             //     thisAttr.parent().parent().remove();
+            //             // } else {
+            //             //
+            //             // }
+            //         },
+            {{--        error: function(error) {--}}
+
+            {{--        }--}}
+            {{--    })--}}
+            {{--});--}}
+
+
+
         })
     </script>
 </x-app-layout>
