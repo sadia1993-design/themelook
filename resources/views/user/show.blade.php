@@ -11,9 +11,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+                    <!-- Validation Errors -->
+                    <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
+
                     <form method="POST" action="{{route('user.update', $user->id)}}">
-                    @csrf
-                        {{method_field('put')}}
+
+                        @csrf
 
 
                          <div class="flex w-full">
@@ -22,6 +26,7 @@
                                     <x-label  for="name" :value="__('Username')" />
 
                                     <x-input id="name" class=" mt-1 w-full " type="text" name="username" :value="$user->username"  autofocus />
+                                    <x-input id="id" class=" mt-1 w-full " type="hidden" name="id" :value="$user->id"  autofocus />
                                 </div>
 
                             <!-- email--->
@@ -43,7 +48,7 @@
                             <!-- Date Of Birth--->
                             <div class="dob  w-50">
                                 <x-label class="ml-3" for="date" :value="__('Date Of Birth')"> </x-label>
-                                <x-input id="date" class=" mt-1 ml-3 w-full" type="date" name="date" :value="$user->date_of_birth"  autofocus />
+                                <x-input id="dob" class=" mt-1 ml-3 w-full " :value="$user->date_of_birth" type="date" name="date_of_birth"   autofocus />
                             </div>
 
                         </div>

@@ -112,7 +112,39 @@ class RegisteredUserController extends Controller
         return view('user.show', compact('user'));
     }
 
-    public function update($id){
+    public function update(Request $request , $id){
+
+
+        $request->validate([
+            'username' => ['required','string'],
+            'email' => ['required', 'email'],
+            'password' => ['required' , ' min:8'],
+            'city' => ['required'],
+            'country' => ['required'],
+            'date_of_birth' => ['required'],
+
+        ]);
+
+        try {
+            if ($request->status == 'active') {
+                $status = "active";
+            } else {
+                $status = "inactive";
+            }
+
+            $data = User::find($id);
+            $data->username = $request->username;
+            $data->email = $request->email;
+            $data->password = Hash::make($request->password);
+            $data->date_of_birth = $request->date_of_birth;
+            $data->city = $request->city;
+            $data->status = $status;
+            $data->country = $request->country;
+            $data->save();
+            return redirect()->route('user')->with('success', 'User updated successfully');
+        } catch (\exception $e) {
+            return $e;
+        }
 
     }
 
