@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductVariantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,5 +33,11 @@ Route::prefix('dashboard')->controller(RegisteredUserController::class)->middlew
 
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('product', ProductController::class);
+    Route::get('product/variants/{id}', [ProductVariantController::class, 'index'])
+        ->name('product.variants');
+
+    Route::post('product/variants/{id}/delete', [ProductVariantController::class, 'destroy'])
+        ->name('product.destroy');
+
 });
 require __DIR__.'/auth.php';

@@ -6,18 +6,19 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductVariantController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $all_products = Product::with(['variants'])
-            ->get();
-        return  view('product.index', compact('all_products'));
+        $product =  Product::with('variants')
+            ->where('id', $id)
+            ->first();
+        return  view('product.variants.index', compact('product'));
     }
 
     /**
@@ -129,8 +130,8 @@ class ProductController extends Controller
     public function destroy($id)
     {
         try {
-            Product::destroy($id);
-            return response()->json(['success' => true, 'message' => 'Product has been deleted successfully !']);
+            ProductVariant::destroy($id);
+            return response()->json(['success' => true, 'message' => 'Variance has been deleted successfully !']);
 //            return redirect()->route('product.index')->with('success', 'product  deleted Successfully');
         } catch (\exception $e) {
 //            return response()->json(['success' => false, 'message' => 'Product update failed !']);

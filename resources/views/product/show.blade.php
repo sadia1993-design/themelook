@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ $variant->product->product_name }}
+{{--            {{ $variant->product->product_name }}--}}
         </h2>
     </x-slot>
 
@@ -18,24 +18,20 @@
                             <!-- product aname -->
                             <div class="product_id flex-initial w-50">
                                 <x-label  for="name" :value="__('Product Name')" />
-                                <select class="w-full" name="pr_name" id="pr_name" autofocus>
-                                    <option value="">Select Product</option>
-                                    @foreach ($products as $product)
-                                        <option value="{{ $product->id }}"
-                                            {{ $product->id == $variant->product_id ? 'selected' : '' }}>{{ $product->product_name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-
+                                <input type="text" class="form-control" value="{!! $product->product_name !!}" />
                             </div>
 
                             <!-- gender--->
-                            <div class="gender flex-initial w-50">
-                                <x-label class="ml-3" for="gender" :value="__('Gender')"> </x-label>
-                                <x-input id="gender" class=" mt-1 ml-3 w-full" type="gender" name="gender" :value="$variant->gender"  autofocus />
+                            <div class="gender ml-3 flex-initial w-50">
+                                <x-label  for="gender" :value="__('Gender')"> </x-label>
+
                             </div>
 
                         </div>
+
+                        <x-button class="mt-4 w-full block text-center ">
+                            {{ __('Update') }}
+                        </x-button>
 
                     </form>
 
