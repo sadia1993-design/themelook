@@ -129,12 +129,12 @@ class ProductVariantController extends Controller
      */
     public function destroy($id)
     {
+
         try {
             ProductVariant::destroy($id);
             return response()->json(['success' => true, 'message' => 'Variance has been deleted successfully !']);
-//            return redirect()->route('product.index')->with('success', 'product  deleted Successfully');
-        } catch (\exception $e) {
-//            return response()->json(['success' => false, 'message' => 'Product update failed !']);
+        }
+        catch (\exception $e) {
             return $e->getMessage();
         }
     }

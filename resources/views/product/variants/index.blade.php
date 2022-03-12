@@ -92,10 +92,11 @@
                     return false;
                 }
                 var thisAttr = $(this);
-                var productId = thisAttr.data('id');
+                var varianceId = thisAttr.data('id');
 
                 var url = "{{route('product.destroy', ':id')}}"
-                url = url.replace(':id', productId);
+                url = url.replace(':id', varianceId);
+                // console.log(url);
 
                 $.ajax({
                     url: url,
